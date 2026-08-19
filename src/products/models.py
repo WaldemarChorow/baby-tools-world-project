@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True, null=False, blank=False)
@@ -21,6 +20,21 @@ class Category(models.Model):
         ordering = ["name"]
         verbose_name_plural = "Categories"
 
+# Tag Class
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True, help_text="Name of Tag")
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        verbods_name = 'Tag'
+        verbose_name = 'Tags'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
 
@@ -29,6 +43,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="imgs/products/", null=True, blank=True)
     name = models.CharField(max_length=80, blank=False, null=False)
     price = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal("0.00"))])
+    tags = models.ManyToManyField(Tag, related_name='products', blank=True, help_text='Tags are assigned to products here.')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -72,3 +87,4 @@ class Comment(models.Model):
     def __str__(self):
         who = self.user.username if self.user else (self.guest_name or "Guest")
         return f"{who} - {self.rating}★"
+
