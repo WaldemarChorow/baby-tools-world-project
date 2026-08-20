@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(
-                        help_text="Name of Tag", max_length=100, unique=True
-                    ),
+                    models.CharField(help_text="Name of Tag", max_length=100, unique=True),
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
