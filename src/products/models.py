@@ -28,8 +28,8 @@ class Tag(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        verbose_name = 'Tag'
         ordering = ['name']
+        verbose_name_plural = 'Tags'
 
     def __str__(self):
         return self.name
