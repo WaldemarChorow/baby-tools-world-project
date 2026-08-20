@@ -57,7 +57,13 @@ def product_detail(request, category_slug, pk):
                 comment.save()
                 messages.success(request, "Thank you for your rating.")
 
-            return redirect("product_detail", category_slug=category_slug, pk=product.pk)
+            comments = product.comments.select_related("user").order_by("-created_at")
+            form = CommentForm()
+            return render(
+                request,
+                "product.html",
+                {"product": product, "comments": comments, "related_products": related_products, "form": form},
+            )
     else:
         # Pre-fill form for authenticated user with existing comment (if any)
         initial = {}
