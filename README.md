@@ -174,7 +174,7 @@ python manage.py seed_db
 
 The application includes a comprehensive product tagging system that allows products to be labeled with multiple tags for better organization and filtering.
 
-#### Features
+#### Tag Capabilities
 
 - Create and manage product tags through the Django admin interface
 - Assign multiple tags to each product
