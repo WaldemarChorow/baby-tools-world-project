@@ -28,7 +28,7 @@ class Tag(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        verbods_name = 'Tag'
+        verbose_name = 'Tag'
         verbose_name = 'Tags'
         ordering = ['name']
 
