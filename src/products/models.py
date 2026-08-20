@@ -29,7 +29,6 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name = 'Tag'
-        verbose_name = 'Tags'
         ordering = ['name']
 
     def __str__(self):
