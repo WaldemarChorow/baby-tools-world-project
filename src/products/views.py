@@ -57,6 +57,7 @@ def product_detail(request, category_slug, pk):
                 comment.save()
                 messages.success(request, "Thank you for your rating.")
 
+            # Refresh comments to show the new one and reset form for next submission
             comments = product.comments.select_related("user").order_by("-created_at")
             form = CommentForm()
             return render(
