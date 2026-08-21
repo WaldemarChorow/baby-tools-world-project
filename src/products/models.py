@@ -26,7 +26,7 @@ class Category(models.Model):
 class Tag(models.Model):
     """Tag model for categorizing products with labels.
 
-    Attributes:
+    Params:
         name: Unique tag name (max 100 chars)
         created_at: Timestamp when tag was created
         updated_at: Timestamp when tag was last updated

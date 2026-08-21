@@ -1,6 +1,15 @@
+import shutil
+from pathlib import Path
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from products.models import Category, Product
+
+# The product images shipped with the codebase. Product.image resolves against
+# MEDIA_ROOT, but MEDIA_ROOT is git-ignored - so the files are kept here and get
+# copied over when seeding.
+SEED_IMAGE_DIR = Path(settings.BASE_DIR) / "static" / "imgs" / "products"
 
 categories_list = [("boys", "", "boys"), ("girls", "", "girls"), ("toys", "", "toys"), ("outdoor", "", "outdoor")]
 products = [
@@ -142,8 +151,20 @@ class Command(BaseCommand):
         # Create products
         created_products = 0
 
+        copied_images = 0
+
         try:
             for product in products:
+                target = Path(settings.MEDIA_ROOT) / product["image"]
+                if not target.exists():
+                    source = SEED_IMAGE_DIR / Path(product["image"]).name
+                    if source.exists():
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(source, target)
+                        copied_images += 1
+                    else:
+                        self.stdout.write(self.style.ERROR(f"Seed image missing: {source}"))
+
                 # Get the category object, if non-existent abort seeding
                 category = Category.objects.filter(name=product["category"]).first()
                 if not category:
