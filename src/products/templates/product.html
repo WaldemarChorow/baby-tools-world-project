@@ -38,6 +38,23 @@
             <div class="mb-3 text-muted">No ratings yet</div>
           {% endif %}
         {% endwith %}
+        
+        <!-- (3) Product Tags Section -->
+        <div class="mb-3">
+          <h6 class="mb-2">Product-Tags</h6>
+
+          {% if product.tags.all %}
+            <div>
+              {% for tag in product.tags.all %}
+                <span class="badge bg-secondary">{{ tag.name }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            <span class="text-muted">no tags available</span>
+          {% endif %}
+        </div>
+
+
 
         <div class="btn btn-primary btn-center mt-auto">Buy now</div>
       </div>

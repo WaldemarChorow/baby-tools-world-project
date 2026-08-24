@@ -6,6 +6,15 @@ The project was developed for educational purposes only and therefore has no cla
 > [!NOTE]
 > This project assumes you already know the python programming language
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Quickstart](#quickstart)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [Containerization](#containerization)
+
 ## Prerequisites
 
 In order to seamlessly interact with the repository and the software it contains you need to following tools preinstalled:
@@ -35,21 +44,42 @@ In order to quickly get started with the project follow these steps:
 1. verify the application is running by visiting `localhost:8000`
 1. (optional) create a superuser by running: `python manage.py createsuperuser`
 
+## Features
+
+The Baby Tools World application includes the following key features:
+
+- **Product Management**: Browse and view detailed information about baby products across different categories.
+- **Product Tags**: Products can be tagged with multiple labels (e.g., "Bestseller", "New", "On Sale") for better organization and filtering.
+- **User Comments and Ratings**: Authenticated users and guests can submit reviews with star ratings and text feedback for products.
+- **Category Filtering**: Products can be filtered by category to help users find relevant items.
+- **Admin Interface**: Comprehensive Django admin interface for managing products, categories, tags, and comments.
+- **Form Handling**: Smart form reset after successful comment submission to improve user experience.
+
 ## Project Structure
 
 - `.gitlab`: GitLab specific project files
 - `.github`: GitHub specific project files
 - `src`: application source code, containing the django project, apps, and other files
 - `requirements.txt`: the project dependencies
+- `docs`: detailed documentation for development and deployment
 
 ### Apps Overview
 
 The project is modularized into several apps:
 
-- `products`: Manages product listings and categories
+- `products`: Manages product listings, categories, tags, and customer reviews. This app provides functionality for browsing products, filtering by category and tags, and submitting ratings and comments.
 - `users`: Handles user authentication and registration.
 
 Each app has its own `models.py`, `views.py`, `urls.py`, and `admin.py` files to encapsulate its functionality.
+
+#### Products App Models
+
+The products app includes the following models:
+
+- `Category`: Represents a product category with name, description, and slug for URL-friendly identification.
+- `Product`: Represents a product with details such as name, description, price, category reference, and associated tags.
+- `Tag`: Represents a tag that can be assigned to multiple products for categorization (e.g., "Bestseller", "New").
+- `Comment`: Represents customer reviews and ratings for products, supporting both authenticated users and guest submissions.
 
 ## Usage
 
@@ -117,7 +147,7 @@ To run the tests with the `django testrunner` you can use the following command:
 
 - `python manage.py test`, you need to run this in the folder where `manage.py` lives -> `src`
 
-For more information about testing, refer to the testing documentation in this repository, see [testing documentation](./docs/testing.md)
+For more information about testing, refer to the testing documentation in this repository, see [testing documentation](./docs/testing.md) and [development guide](./docs/development.md)
 
 ### Running with a WSGI Server
 
@@ -148,6 +178,26 @@ In order to run that comand go the the directory, where your `manage.py` file is
 ```bash
 python manage.py seed_db
 ```
+
+### Product Tags
+
+The application includes a comprehensive product tagging system that allows products to be labeled with multiple tags for better organization and filtering.
+
+#### Tag Capabilities
+
+- Create and manage product tags through the Django admin interface
+- Assign multiple tags to each product
+- Filter products by tags in the admin interface
+- Display product tags on the product detail page
+
+#### Getting Started with Tags
+
+1. Log in to the Django admin interface at `/admin/`
+2. Navigate to the "Tags" section to create and manage tags
+3. When editing a product, you can assign one or more tags from the product edit form
+4. Tags will be displayed on the product detail page as labeled badges
+
+For detailed information about the product tags feature, including configuration, usage examples, and best practices, refer to the [Product Tags documentation](./docs/product-tags.md).
 
 ### Containerization
 

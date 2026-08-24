@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.db.models import Avg, Count
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import CommentForm
 from .models import Category, Comment, Product
@@ -57,7 +57,14 @@ def product_detail(request, category_slug, pk):
                 comment.save()
                 messages.success(request, "Thank you for your rating.")
 
-            return redirect("product_detail", category_slug=category_slug, pk=product.pk)
+            # Refresh comments to show the new one and reset form for next submission
+            comments = product.comments.select_related("user").order_by("-created_at")
+            form = CommentForm()
+            return render(
+                request,
+                "product.html",
+                {"product": product, "comments": comments, "related_products": related_products, "form": form},
+            )
     else:
         # Pre-fill form for authenticated user with existing comment (if any)
         initial = {}
